@@ -120,6 +120,7 @@ export default defineComponent({
         }
       });
     };
+    // 请求接口
     const request = () => {
       state.isSending = true;
       postCreateInvite({
@@ -127,10 +128,11 @@ export default defineComponent({
         email: form.email,
       })
         .then((res) => {
-          if (res.errorMessage) {
-            state.errorMsg = res.errorMessage;
-          } else {
+          // 显示错误原因
+          if (res === "Registered") {
             state.isSuccess = true;
+          } else {
+            state.errorMsg = res.errorMessage || "network error";
           }
         })
         .finally(() => {
